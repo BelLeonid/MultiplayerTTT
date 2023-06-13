@@ -31,6 +31,10 @@ io.on("connection", socket => {
         console.log("Match started");
     }
 
+    if (gameState.getGameStarted()) {
+        socket.emit("continue", gameState.getActivePlayer(), gameState.board.getBoard());
+    }
+
     socket.on("turn", (turn) => {
         console.log(`Turn by Player ${playerSlot}: ${turn.x}, ${turn.y}`);
         if (gameState.getGameOver()) return;
