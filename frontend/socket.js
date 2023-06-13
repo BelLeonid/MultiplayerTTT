@@ -13,18 +13,13 @@ socket.on("clientId", (id) => {
 // first player to connect goes first
 socket.on("start", (firstId) => {
     activeId = firstId;
-    document.getElementById("current-status").innerHTML = clientId == activeId ? "It's your turn" : " It's not your turn";
-});
-
-socket.on("continue", (active, board) => {
-    activeId = active;
     for (let x = 0; x < board.length; x++) {
         for (let y = 0; y < board.length; y++) {
             setBoard(x, y, board[y][x]);
         }
     }
     document.getElementById("current-status").innerHTML = clientId == activeId ? "It's your turn" : " It's not your turn";
-})
+});
 
 socket.on("turn", (turn) => {
     const {x, y, nextPlayer} = turn;
