@@ -31,9 +31,9 @@ io.on("connection", socket => {
         console.log("Match started");
     }
 
-    if (gameState.getGameStarted()) {
-        socket.emit("continue", gameState.getActivePlayer(), gameState.board.getBoard());
-    }
+    // if (gameState.getGameStarted()) {
+    //     socket.emit("continue", gameState.getActivePlayer(), gameState.board.getBoard());
+    // }
 
     socket.on("turn", (turn) => {
         console.log(`Turn by Player ${playerSlot}: ${turn.x}, ${turn.y}`);
@@ -45,10 +45,10 @@ io.on("connection", socket => {
         io.emit("turn", {
             "x": turn.x,
             "y": turn.y,
-            "nextPlayer": gameState.activePlayer
+            "nextPlayer": gameState.getActivePlayer()
         });
 
-        let gameOverData = gameState.board.checkGameOver(playerSlot, turn.x, turn.y);
+        const gameOverData = gameState.board.checkGameOver(playerSlot, turn.x, turn.y);
         gameState.setGameOver(gameOverData['over'])
         if (gameState.getGameOver()) {
             console.log(gameOverData['winner'] !== 0 ? `Player ${playerSlot} won!` : "It is a draw");
